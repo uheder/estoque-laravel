@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,11 +14,29 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        Model::unguard();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        $this->call(ProdutoTableSeeder::class);
+    }
+}
+
+class ProdutoTableSeeder extends Seeder {
+    public function run(): void
+    {
+        DB::insert('insert into produtos
+        (nome, qtd_estoque, descricao, marca, modelo, valor)
+        values (?, ?, ?, ?, ?, ?)', array('Geladeira', 5, 'Frostfree',
+        'marca', 'modelo', 2500.00));
+
+        DB::insert('insert into produtos
+        (nome, qtd_estoque, descricao, marca, modelo, valor)
+        values (?, ?, ?, ?, ?, ?)', array('Microondas', 10, 'Microondas',
+         'marca','modelo', 2500.00));
+
+        DB::insert('insert into produtos
+        (nome, qtd_estoque, descricao, marca, modelo, valor)
+        values(?, ?, ?, ?, ?, ?)', array('Fogão', 5, 'Fogão',
+         'marca', 'modelo', 2500.00));
+        
     }
 }
